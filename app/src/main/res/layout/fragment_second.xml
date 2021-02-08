@@ -29,36 +29,36 @@
         app:layout_constraintStart_toStartOf="@+id/eTItem"
         app:layout_constraintTop_toBottomOf="@+id/eTItem" />
 
-    <EditText
-        android:id="@+id/eTCantidad"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="55dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Cantidad"
-        app:layout_constraintStart_toStartOf="@+id/eTPrecio"
-        app:layout_constraintTop_toBottomOf="@+id/eTPrecio" />
-
     <TextView
         android:id="@+id/tvTotal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="137dp"
         android:layout_marginBottom="136dp"
-        android:text="TOTAL CONSUMO"
+        android:text="@string/total_consumo"
+        android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="@+id/button_second"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.484"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/eTCantidad" />
+        app:layout_constraintTop_toBottomOf="@+id/NPicker"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/button_second"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="124dp"
+        android:layout_marginBottom="68dp"
         android:text="Guardar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <NumberPicker
+        android:id="@+id/NPicker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/eTPrecio" />
 </androidx.constraintlayout.widget.ConstraintLayout>
