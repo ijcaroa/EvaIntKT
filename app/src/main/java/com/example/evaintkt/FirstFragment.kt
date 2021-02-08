@@ -7,28 +7,49 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.evaintkt.databinding.FragmentFirstBinding
 import com.example.evaintkt.viewModel.ItemViewModel
 
 
 class FirstFragment : Fragment() {
-    private lateinit var binding :FragmentFirstBinding
+    private lateinit var binding: FragmentFirstBinding
     private val viewModel: ItemViewModel by activityViewModels()
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
-       binding = FragmentFirstBinding.inflate(inflater,container,false )
+        binding = FragmentFirstBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
+        val adapter = ItemAdapter()
+        binding.rVConsumo.adapter = adapter
+        binding.rVConsumo.layoutManager = LinearLayoutManager(context)
+        binding.rVConsumo.addItemDecoration(DividerItemDecoration(context,DividerItemDecoration.VERTICAL))
 
-        view.findViewById<Button>(R.id.button_first).setOnClickListener {
+        viewModel.allTask.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                adapter.update(it)
+            }
+        })
+        adapter.selectedItem().observe(viewLifecycleOwner, Observer {
+            it?.let {
+                val bundle = Bundle()
+                bundle.putInt("id",it.id)
+                findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment, bundle)
+            }
+        })
+        binding.fab3.setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+
         }
     }
 }
