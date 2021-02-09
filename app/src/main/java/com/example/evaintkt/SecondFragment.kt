@@ -79,17 +79,17 @@ class SecondFragment : Fragment() {
     private fun saveItem(){
         val item = binding.eTItem.text.toString()
         val numeroConsumo = binding.NPicker.value
-        var precio = binding.eTPrecio
+        var precio = binding.eTPrecio.text.toString().toInt()
         val totalConsumido = binding.tvTotal.text.toString().toInt()
 
        if (item.isEmpty()){
             Toast.makeText(context, "Debe ingresar datos", Toast.LENGTH_LONG).show()
         } else {
             if (idTask == -1){
-                val newItem = Entity(item = item, cantidad = numeroConsumo, total = totalConsumido, unitPrice = 0)
+                val newItem = Entity(item = item, cantidad = numeroConsumo,unitPrice = precio, total = totalConsumido)
                 viewModel.insertTask(newItem)
             } else{
-                val updateTask = Entity(id = idTask, item = item,cantidad = numeroConsumo, total = totalConsumido,unitPrice = 0)
+                val updateTask = Entity(id = idTask, item = item,cantidad = numeroConsumo,unitPrice = precio , total = totalConsumido)
                 viewModel.updateTask(updateTask)
             }
         }
