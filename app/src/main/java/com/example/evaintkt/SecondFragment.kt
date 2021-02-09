@@ -27,6 +27,13 @@ class SecondFragment : Fragment() {
 
     private var idTask: Int = -1
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            idTask = it.getInt("id",-1)
+        }
+    }
+
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
@@ -42,39 +49,47 @@ class SecondFragment : Fragment() {
         binding.NPicker.minValue = 1
         binding.NPicker.setOnValueChangedListener { picker, oldVal, newVal ->
             Log.d("PICKER", "${picker.value}")
-        
+
+            viewModel.calculateTotal(picker.value, binding.eTPrecio.text.toString().toInt())
 
         }
 
-        binding.buttonSecond.setOnClickListener {
-            saveItem()
-            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
-
-
-
-        }
-       viewModel.getTaskById(idTask).observe(viewLifecycleOwner, Observer {
+        viewModel.mutableTotal.observe(viewLifecycleOwner, Observer {
             it?.let {
-                binding.eTItem.setText(it.item)
-
-
+                binding.tvTotal.text = it.toString()
             }
         })
+
+       binding.buttonSecond.setOnClickListener {
+            saveItem()
+
+
+
+
+
+            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
+        }
+        viewModel.getTaskById(idTask).observe(viewLifecycleOwner, Observer {
+            it?.let {
+                binding.eTItem.setText(it.item)
+            }
+        })
+
     }
     private fun saveItem(){
         val item = binding.eTItem.text.toString()
         val numeroConsumo = binding.NPicker.value
-        //val totalConsumido =
-        var precio = binding.eTPrecio.
-        var numero = numeroConsumo
+        var precio = binding.eTPrecio
+        val totalConsumido = binding.tvTotal.text.toString().toInt()
+
        if (item.isEmpty()){
             Toast.makeText(context, "Debe ingresar datos", Toast.LENGTH_LONG).show()
         } else {
             if (idTask == -1){
-                val newItem = Entity(item = item, unitPrice = numeroConsumo , cantidad = 0)
+                val newItem = Entity(item = item, cantidad = numeroConsumo, total = totalConsumido, unitPrice = 0)
                 viewModel.insertTask(newItem)
             } else{
-                val updateTask = Entity(id = idTask, item = item, unitPrice = numeroConsumo, cantidad = 0)
+                val updateTask = Entity(id = idTask, item = item,cantidad = numeroConsumo, total = totalConsumido,unitPrice = 0)
                 viewModel.updateTask(updateTask)
             }
         }

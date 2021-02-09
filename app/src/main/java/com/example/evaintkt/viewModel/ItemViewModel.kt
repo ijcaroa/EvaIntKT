@@ -3,6 +3,7 @@ package com.example.evaintkt.viewModel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.evaintkt.model.Dao
 import com.example.evaintkt.model.Entity
@@ -14,6 +15,8 @@ class ItemViewModel (application: Application) : AndroidViewModel(application) {
 
     private val repository: ItemRepository
     val allTask : LiveData<List<Entity>>
+    val mutableTotal = MutableLiveData<Int>()
+
 
     init {
         val dao = ItemDatabase.getDataBase(application).getDao()
@@ -34,6 +37,10 @@ class ItemViewModel (application: Application) : AndroidViewModel(application) {
         return repository.getTaskById(id)
     }
 
+    fun calculateTotal(cantidad: Int, precio: Int) {
+        val totalConsumo = cantidad * precio
+        mutableTotal.value = totalConsumo
 
+    }
 
 }

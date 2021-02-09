@@ -12,4 +12,5 @@ data class Entity (
         val id: Int = 0,
         val item: String,
         val unitPrice: Int,
-        val cantidad: Int)
+        val cantidad: Int,
+        val total: Int)

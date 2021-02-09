@@ -24,8 +24,9 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ItemVH>() {
             RecyclerView.ViewHolder(binding.root),View.OnClickListener{
                 fun bind(task: Entity){
                     binding.tVItem.text = task.item
-                    binding.tVCantidad.text = task.unitPrice.toString()
-                    binding.tVTotal.text = task.cantidad.toString()
+                    binding.tVCantidad.text = task.cantidad.toString()
+                    binding.tVTotal.text = task.total.toString()
+
                     itemView.setOnClickListener(this)
                 }
         override fun onClick(v: View?) {

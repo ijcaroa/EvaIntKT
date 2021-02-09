@@ -44,9 +44,9 @@ class FirstFragment : Fragment() {
         })
         adapter.selectedItem().observe(viewLifecycleOwner, Observer {
             it?.let {
-                //val bundle = Bundle()
-                //bundle.putInt("id",it.id)
-                findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment) //,bundle)
+                val bundle = Bundle()
+                bundle.putInt("id",it.id)
+                findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment,bundle)
             }
         })
         binding.fab3.setOnClickListener {
