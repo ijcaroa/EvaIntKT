@@ -13,8 +13,9 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ItemVH>() {
 
     private var itemTask = listOf<Entity>()
     private val selectedTaskItem = MutableLiveData<Entity>()
-
     fun selectedItem(): LiveData<Entity> = selectedTaskItem
+
+
     fun update(list: List<Entity>){
         itemTask = list
         notifyDataSetChanged()
@@ -26,9 +27,7 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ItemVH>() {
                     binding.tVCantidad.text = task.unitPrice.toString()
                     binding.tVTotal.text = task.cantidad.toString()
                     itemView.setOnClickListener(this)
-
                 }
-
         override fun onClick(v: View?) {
             selectedTaskItem.value = itemTask[adapterPosition]
         }
